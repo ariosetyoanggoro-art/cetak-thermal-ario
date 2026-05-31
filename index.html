@@ -22,15 +22,15 @@
 
         .receipt-preview { 
             background: #fff; padding: 5px; margin-top: 20px; border: 1px solid #ddd; width: 300px; 
-            font-size: 20px; font-weight: 400; color: #000; line-height: 1.1;
+            font-size: 16px; font-weight: 400; color: #000; line-height: 1.1;
             font-family: 'DotGothic16', sans-serif;
         }
         .center { text-align: center; }
-        .bold { font-weight: bold; font-size: 1.0em; border-bottom: 1px solid transparent; }
-        .line { border-top: 1px dashed #000; margin: 8px 0; }
-        .logo-img { width: 140px; display: block; margin: 0 auto 5px auto; }
+        .bold { font-weight: bold; font-size: 0.9em; border-bottom: 1px solid transparent; }
+        .line { border-top: 1px dashed #000; border-bottom: none; border-left: none; border-right: none; margin: 8px 0; height: 0; letter-spacing: 2px; }
+        .logo-img { width: 120px; display: block; margin: 0 auto 5px auto; }
         .item-row { display: flex; }
-        .item-label { width: 150px; flex-shrink: 0; }
+        .item-label { width: 140px; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label>Waktu Transaksi (Kosongkan untuk Waktu Sekarang)</label>
+        <label>Waktu Transaksi</label>
         <input type="text" id="in_waktu" oninput="updatePreview()" placeholder="DD/MM/YYYY HH:MM:SS">
     </div>
     <div class="form-group">
@@ -73,11 +73,11 @@
     </div>
     <div class="form-group">
         <label>Harga Per Liter (Rp)</label>
-        <input type="number" id="in_harga" value="10000" oninput="updatePreview()" placeholder="10000">
+        <input type="text" id="in_harga" value="10000" oninput="updatePreview()" placeholder="10000">
     </div>
     <div class="form-group">
         <label>Volume / Jumlah Liter</label>
-        <input type="number" id="in_vol" value="1.50" step="0.01" oninput="updatePreview()" placeholder="1.50">
+        <input type="text" id="in_vol" value="1.50" oninput="updatePreview()" placeholder="1.50">
     </div>
     <div class="form-group">
         <label>Nomor Plat Kendaraan</label>
@@ -110,11 +110,13 @@
     <div class="item-row"><span class="item-label">Total Harga</span>: Rp.<span id="out_total"></span></div>
     <div class="item-row"><span class="item-label">Operator</span>: BAMBANG</div>
     <div class="line"></div>
-    <div style="display:flex; justify-content:space-between;">
+    <div class="flex">
         <span>CASH</span>
-        <span>Rp.<span id="out_cash_total"></span></span>
     </div>
-    <br>
+    <div style="text-align:right;">
+        <span id="out_cash_total"></span>
+    </div>
+    
     <div class="line"></div>
     <div id="out_plat"></div>
     <div class="line"></div>
@@ -132,12 +134,13 @@
         document.getElementById('out_waktu').innerText = "Waktu : " + (document.getElementById('in_waktu').value || new Date().toLocaleString());
         document.getElementById('out_pompa').innerText = document.getElementById('in_pompa').value;
         document.getElementById('out_produk').innerText = document.getElementById('in_produk').value;
-        let h = document.getElementById('in_harga').value;
-        let v = document.getElementById('in_vol').value;
+        let h = parseFloat(document.getElementById('in_harga').value || 0);
+        let v = parseFloat(document.getElementById('in_vol').value || 0);
+        let total = h * v;
         document.getElementById('out_harga').innerText = formatRibuan(h);
         document.getElementById('out_vol').innerText = v;
-        document.getElementById('out_total').innerText = formatRibuan(h*v);
-        document.getElementById('out_cash_total').innerText = formatRibuan(h*v);
+        document.getElementById('out_total').innerText = formatRibuan(total);
+        document.getElementById('out_cash_total').innerText = formatRibuan(total);
         document.getElementById('out_plat').innerText = "No. Plat : " + document.getElementById('in_plat').value;
         document.getElementById('out_note').innerText = document.getElementById('in_note').value;
     }
