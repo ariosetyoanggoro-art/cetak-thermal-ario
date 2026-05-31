@@ -111,24 +111,52 @@
         var alamat = document.getElementById('in_alamat').value;
         var total = document.getElementById('in_harga').value * document.getElementById('in_vol').value;
         
+        var W = 32;
+
+        function center(txt) {
+            if (txt.length >= W) return txt;
+            var sp = Math.floor((W - txt.length) / 2);
+            return new Array(sp + 1).join(' ') + txt;
+        }
+
+        function row(left, right) {
+            var space = W - (left.length + right.length);
+            return left + new Array(Math.max(1, space) + 1).join(' ') + right;
+        }
+
+        function rowKolom(label, value) {
+            while (label.length < 14) { label = label + ' '; }
+            return label + ': ' + value;
+        }
+
         var s = '<img>https://ariosetyoanggoro-art.github.io/cetak-thermal-ario/logo-pertamina.png</img>\n';
-        s += '\x1b\x45\x01' + spbu + '\x1b\x45\x00' + '\n';
-        s += nama + '\n' + alamat + '\n';
-        s += 'Shift: ' + document.getElementById('in_shift').value + ' No.Trans: ' + document.getElementById('in_trans').value + '\n';
-        s += 'Waktu: ' + (document.getElementById('in_waktu').value || new Date().toLocaleString()) + '\n';
+        
+        var spNomor = Math.floor((W - spbu.length) / 2);
+        s += new Array(spNomor + 1).join(' ') + '\x1b\x45' + spbu + '\x1b\x46\n';
+        
+        s += center(nama) + '\n';
+        s += center(alamat) + '\n';
+        s += 'Shift : ' + document.getElementById('in_shift').value + '   No.Trans: ' + document.getElementById('in_trans').value + '\n';
+        s += 'Waktu : ' + (document.getElementById('in_waktu').value || new Date().toLocaleString()) + '\n';
         s += '--------------------------------\n';
-        s += 'Pulau/Pompa   : ' + document.getElementById('in_pompa').value + '\n';
-        s += 'Nama Produk   : ' + document.getElementById('in_produk').value + '\n';
-        s += 'Harga/Liter   : Rp.' + formatRibuan(document.getElementById('in_harga').value) + '\n';
-        s += 'Volume        : ' + document.getElementById('in_vol').value + '\n';
-        s += 'Total Harga   : Rp.' + formatRibuan(total) + '\n';
-        s += 'Operator      : BAMBANG\n';
+        s += rowKolom('Pulau/Pompa', document.getElementById('in_pompa').value) + '\n';
+        s += rowKolom('Nama Produk', document.getElementById('in_produk').value) + '\n';
+        s += rowKolom('Harga/Liter', 'Rp.' + formatRibuan(document.getElementById('in_harga').value)) + '\n';
+        s += rowKolom('Volume', document.getElementById('in_vol').value) + '\n';
+        s += rowKolom('Total Harga', 'Rp.' + formatRibuan(total)) + '\n';
+        s += rowKolom('Operator', 'BAMBANG') + '\n';
         s += '--------------------------------\n';
-        s += 'CASH          : Rp.' + formatRibuan(total) + '\n\n';
+        s += row('CASH', 'Rp.' + formatRibuan(total)) + '\n';
+        s += '\n';
         s += '--------------------------------\n';
         s += 'No. Plat : ' + document.getElementById('in_plat').value + '\n';
         s += '--------------------------------\n';
-        s += document.getElementById('in_note').value + '\n\n\n';
+        
+        var note = document.getElementById('in_note').value;
+        if (note) {
+            s += note + '\n';
+        }
+        s += '\n\n\n';
 
         window.location.href = 'rawbt:base64,' + btoa(unescape(encodeURIComponent(s)));
     }
