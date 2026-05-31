@@ -41,14 +41,13 @@
         .logo-img { width: 120px; display: block; margin: 0 auto 5px auto; }
         .item-row {
             display: grid;
-            grid-template-columns: 120px 20px 50px 1fr;
+            grid-template-columns: 120px 20px 1fr;
             align-items: center;
             width: 100%;
             margin: 1px 0;
         }
         .item-label { text-align: left; }
         .item-colon { text-align: center; }
-        .item-prefix { text-align: left; }
         .item-data { text-align: left; }
         .flex-between { display: flex; justify-content: space-between; width: 100%; }
     </style>
@@ -126,12 +125,12 @@
     
     <div class="line"></div>
     
-    <div class="item-row"><span class="item-label">Pulau/Pompa</span><span class="item-colon">:</span><span class="item-prefix"></span><span class="item-data" id="out_pompa"></span></div>
-    <div class="item-row"><span class="item-label">Nama Produk</span><span class="item-colon">:</span><span class="item-prefix"></span><span class="item-data" id="out_produk"></span></div>
-    <div class="item-row"><span class="item-label">Harga/Liter</span><span class="item-colon">:</span><span class="item-prefix">Rp.</span><span class="item-data" id="out_harga"></span></div>
-    <div class="item-row"><span class="item-label">Volume</span><span class="item-colon">:</span><span class="item-prefix">(L)</span><span class="item-data" id="out_vol"></span></div>
-    <div class="item-row"><span class="item-label">Total Harga</span><span class="item-colon">:</span><span class="item-prefix">Rp.</span><span class="item-data" id="out_total"></span></div>
-    <div class="item-row"><span class="item-label">Operator</span><span class="item-colon">:</span><span class="item-prefix"></span><span class="item-data">BAMBANG</span></div>
+    <div class="item-row"><span class="item-label">Pulau/Pompa</span><span class="item-colon">:</span><span class="item-data" id="out_pompa"></span></div>
+    <div class="item-row"><span class="item-label">Nama Produk</span><span class="item-colon">:</span><span class="item-data" id="out_produk"></span></div>
+    <div class="item-row"><span class="item-label">Harga/Liter</span><span class="item-colon">:</span><span class="item-data">Rp.<span id="out_harga"></span></span></div>
+    <div class="item-row"><span class="item-label">Volume</span><span class="item-colon">:</span><span class="item-data">(L) <span id="out_vol"></span></span></div>
+    <div class="item-row"><span class="item-label">Total Harga</span><span class="item-colon">:</span><span class="item-data">Rp.<span id="out_total"></span></span></div>
+    <div class="item-row"><span class="item-label">Operator</span><span class="item-colon">:</span><span class="item-data">BAMBANG</span></div>
     
     <div class="line"></div>
     
