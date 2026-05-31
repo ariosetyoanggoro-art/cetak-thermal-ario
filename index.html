@@ -26,24 +26,24 @@
         /* Gaya Preview Struk (58mm) */
         .receipt-preview { 
             background: #fff; 
-            padding: 10px; 
+            padding: 5px; 
             margin-top: 20px; 
             border: 1px solid #ddd; 
-            width: 100%; 
-            max-width: 300px; /* Standar Lebar Printer 58mm */
-            font-size: 13px;
+            width: 300px; 
+            font-size: 17px; /* Perbesar font agar mirip hasil cetak teks langsung */
+            font-weight: 600; /* Membuat font sedikit lebih tebal/hitam */
             color: #000;
-            line-height: 1.2;
+            line-height: 1.1;
+            font-family: "Courier New", Courier, monospace;
         }
         .center { text-align: center; }
-        .bold { font-weight: bold; font-size: 1.1em; }
-        .line { border-top: 1px dashed #000; margin: 5px 0; }
+        .bold { font-weight: 900; font-size: 1.2em; }
+        .line { border-top: 2px dashed #000; margin: 8px 0; }
         .flex { display: flex; justify-content: space-between; }
-        .logo-img { width: 180px; display: block; margin: 0 auto 5px auto; }
-        .item-row { display: flex; }
-        .item-label { width: 120px; flex-shrink: 0; }
-        .item-dots { flex-grow: 1; }
-        .item-val { text-align: right; }
+        .logo-img { width: 220px; display: block; margin: 0 auto 10px auto; }
+        .item-row { display: flex; margin-bottom: 2px; }
+        .item-label { width: 140px; flex-shrink: 0; }
+        .item-val { flex-grow: 1; text-align: left; }
     </style>
 </head>
 <body>
