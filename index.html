@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk Pertamina Lengkap</title>
+    <title>Cetak Struk SPBU Pertamina</title>
     <style>
-        body { font-family: sans-serif; background: #eef1f5; margin: 0; padding: 20px; }
-        .container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #003399; margin-top: 0; }
-        .form-group { margin-bottom: 10px; }
-        label { display: block; font-size: 14px; color: #555; margin-bottom: 4px; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; padding: 14px; background: #003399; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        body { font-family: 'Courier New', Courier, monospace; background: #f0f2f5; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 320px; margin: 0 auto; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #003399; margin-top: 0; font-size: 1.2em; }
+        .form-group { margin-bottom: 8px; }
+        label { display: block; font-size: 13px; color: #555; margin-bottom: 4px; }
+        input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        input[type="number"] { text-align: right; }
+        button { width: 100%; padding: 12px; background: #003399; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         button:active { background: #002266; }
-        .flex-row { display: flex; gap: 10px; }
+        .flex-row { display: flex; gap: 8px; }
         .flex-row .form-group { flex: 1; }
+        .separator { border-top: 1px dashed #ccc; margin: 12px 0; }
+        .footer-text { text-align: center; margin-top: 10px; font-size: 11px; color: #666; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Form Input Struk</h2>
-    
     <div class="form-group">
-        <label>Nomor Atas (Bold)</label>
-        <input type="text" id="nomor_atas" value="54.631.10">
+        <div class="logo-ascii">PERTAMINA</div> <!-- Placeholder ASCII -->
     </div>
     <div class="form-group">
-        <label>Nama Lokasi/SPBU</label>
-        <input type="text" id="lokasi" value="SPBU DS. PELEM">
+        <label>SPBU</label>
+        <input type="text" id="spbu" value="SPBU 31.XXXXX">
     </div>
-    
+    <div class="form-group">
+        <label>Lokasi</label>
+        <input type="text" id="lokasi" value="JL. RAYA PERJUANGAN">
+    </div>
+    <div class="form-group">
+        <label>Alamat</label>
+        <input type="text" id="alamat" value="CIKOTRAH, BEKASI UTARA">
+    </div>
+    <div class="form-group">
+        <label>Telp</label>
+        <input type="text" id="telp" value="(021) 12345678">
+    </div>
+
+    <div class="separator"></div>
+
     <div class="flex-row">
         <div class="form-group">
             <label>Shift</label>
@@ -38,31 +52,31 @@
         </div>
         <div class="form-group">
             <label>No. Trans</label>
-            <input type="text" id="no_trans" value="3844">
+            <input type="text" id="no_trans" value="003844">
         </div>
     </div>
 
     <div class="form-group">
-        <label>Waktu (Otomatis jika kosong)</label>
-        <input type="text" id="waktu" placeholder="Contoh: 15-05-2024 14:30:00">
+        <label>Waktu</label>
+        <input type="text" id="waktu" placeholder="15-05-2024 14:30:00">
     </div>
 
-    <hr style="border-top: 1px dashed #ccc; border-bottom: none; margin: 15px 0;">
+    <div class="separator"></div>
 
     <div class="form-group">
-        <label>Pulau / Pompa</label>
-        <input type="text" id="pompa" value="1 / 2">
+        <label>Pulau/Pompa</label>
+        <input type="text" id="pompa" value="1/2">
     </div>
     <div class="form-group">
         <label>Nama Produk</label>
         <input type="text" id="produk" value="PERTALITE">
     </div>
     <div class="form-group">
-        <label>Harga / Liter (Rp)</label>
+        <label>Harga/Liter (Rp)</label>
         <input type="number" id="harga" value="10000">
     </div>
     <div class="form-group">
-        <label>Volume (L)</label>
+        <label>Volume</label>
         <input type="number" id="volume" value="1.50" step="0.01">
     </div>
     <div class="form-group">
@@ -74,89 +88,145 @@
         <input type="text" id="operator" value="BAMBANG">
     </div>
 
+    <div class="separator"></div>
+
+    <div class="form-group">
+        <label>No. Plat</label>
+        <input type="text" id="no_plat" value="B 1234 CD">
+    </div>
+    <div class="form-group">
+        <label>Catatan Plat</label>
+        <input type="text" id="catatan_plat" value="(Jika ada)">
+    </div>
+
     <button onclick="cetak()">CETAK STRUK</button>
 </div>
 
 <script>
-    function formatRibuan(angka) {
-        return parseInt(angka).toLocaleString('id-ID');
+    // Fungsi untuk memformat angka menjadi format ribuan Rupiah
+    function formatRupiah(angka) {
+        return Number(angka).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace('Rp', '').trim();
     }
 
+    // Fungsi untuk mengisi data default jika kosong
+    function setDefaultValues() {
+        const now = new Date();
+        const pad = (n) => n.toString().padStart(2, '0');
+        const waktuInput = document.getElementById('waktu');
+        if (!waktuInput.value) {
+            waktuInput.value = `${pad(now.getDate())}-${pad(now.getMonth()+1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+        }
+        hitungTotal(); // Hitung total awal
+    }
+
+    // Fungsi hitung total otomatis saat input berubah
+    const hargaInput = document.getElementById('harga');
+    const volumeInput = document.getElementById('volume');
+    const totalInput = document.getElementById('total');
+
+    function hitungTotal() {
+        const harga = parseFloat(hargaInput.value || 0);
+        const volume = parseFloat(volumeInput.value || 0);
+        const total = harga * volume;
+        totalInput.value = formatRupiah(total);
+    }
+
+    hargaInput.addEventListener('input', hitungTotal);
+    volumeInput.addEventListener('input', hitungTotal);
+
+    // Panggil saat load halaman
+    setDefaultValues();
+
     function cetak() {
-        const nomor_atas = document.getElementById('nomor_atas').value;
-        const lokasi = document.getElementById('lokasi').value;
+        // Mengambil data dari form
+        const spbu = document.getElementById('spbu').value.toUpperCase();
+        const lokasi = document.getElementById('lokasi').value.toUpperCase();
+        const alamat = document.getElementById('alamat').value.toUpperCase();
+        const telp = document.getElementById('telp').value.toUpperCase();
         const shift = document.getElementById('shift').value;
         const no_trans = document.getElementById('no_trans').value;
-        
-        let waktuInput = document.getElementById('waktu').value;
-        if (!waktuInput) {
-            const now = new Date();
-            const pad = (n) => n.toString().padStart(2, '0');
-            waktuInput = `${pad(now.getDate())}-${pad(now.getMonth()+1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-        }
+        const waktu = document.getElementById('waktu').value;
         
         const pompa = document.getElementById('pompa').value;
         const produk = document.getElementById('produk').value;
-        const harga = formatRibuan(document.getElementById('harga').value);
+        const harga = formatRupiah(document.getElementById('harga').value);
         const volume = parseFloat(document.getElementById('volume').value).toFixed(2);
-        const total = formatRibuan(document.getElementById('total').value);
+        const total = formatRupiah(document.getElementById('total').value);
         const operator = document.getElementById('operator').value;
-        
-        // --- FORMATTING (Lebar Kertas 58mm = max ~32 karakter) ---
-        // Jika 32 kekecilan, RawBT biasanya dukung 32 atau 48 tergantung font. Kita pakai standar 32.
+        const no_plat = document.getElementById('no_plat').value;
+        const catatan_plat = document.getElementById('catatan_plat').value;
+
+        // --- FORMATTING STRUK (Lebar Kertas 58mm = max ~32 karakter) ---
         const LINE_WIDTH = 32;
 
         const center = (txt) => {
-            let space = Math.max(0, Math.floor((LINE_WIDTH - txt.length) / 2));
-            return " ".repeat(space) + txt;
+            // Handle jika teks lebih panjang dari lebar kertas
+            if (txt.length > LINE_WIDTH) {
+                return txt.substring(0, LINE_WIDTH);
+            }
+            let spaces = Math.max(0, Math.floor((LINE_WIDTH - txt.length) / 2));
+            return " ".repeat(spaces) + txt;
         };
 
-        // Fungsi khusus agar titik dua (:) lurus rapi (Rata Kiri, Tengah, Kanan)
+        // Fungsi untuk baris kiri-kanan dengan titik dua sejajar
         const rowKolom = (label, value) => {
-            // Label kita patok lebarnya 13 karakter
-            const labelPad = label.padEnd(14, ' '); 
-            // Sisa ruang untuk value: 32 - 14 - 1(spasi) - 1(titik dua) = 16
-            // Kita gabung: LABEL (14) + ": " + VALUE
-            return labelPad + ": " + value;
+            const labelPad = label.padEnd(14, ' '); // Patok lebar label
+            const result = labelPad + ': ' + value;
+            // Pangkas jika terlalu panjang
+            return result.length > LINE_WIDTH ? result.substring(0, LINE_WIDTH) : result;
         };
+
+        // ASCII Art Logo Pertamina (sederhana)
+        const logoAscii = [
+            "   ____   _                 _",
+            "  |  _ \ (_) __ _ _ __   __| |",
+            "  | |_) | | |/ _` | '_ \ / _` |";
+            "  |  __/| | | (_| | | | | (_| |";
+            "  |_|   |_|_|\__,_|_| |_|\__,_|";
+        ].join('\n');
 
         let struk = "";
+
+        // 1. Logo Pertamina ASCII
+        struk += logoAscii + "\n";
         
-        // 1. Gambar Logo (Khusus printer ESC/POS via RawBT)
-        // Kita menyisipkan tag gambar ESC/POS. RawBT mendukung <image> base64 atau URL online jika format HTML raw.
-        // Cara paling aman dengan text ESC/POS adalah pakai kode khusus RawBT image tag.
-        // URL SVG Wikimedia tidak bisa langsung dicetak, kita pakai placeholder Teks Besar atau instruksi logo image.
-        struk += "<img>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Pertamina_Logo.svg/320px-Pertamina_Logo.svg.png</img>\n";
-        
-        // 2. Teks Utama
-        // Bold: <b>...</b>
-        struk += center("<b>" + nomor_atas + "</b>") + "\n";
+        // 2. Header Informasi
+        struk += center("<b>" + spbu + "</b>") + "\n"; // Nomor tebal pakai ESC/POS
         struk += center(lokasi) + "\n";
-        struk += center("Shift: " + shift + "   No. Trans: " + no_trans) + "\n";
-        struk += center("Waktu: " + waktuInput) + "\n";
-        struk += "\n"; // Spasi kosong
+        struk += center(alamat) + "\n";
+        struk += center(telp) + "\n";
+        struk += "--------------------------------\n";
+        struk += center(waktu) + "\n";
+        struk += "--------------------------------\n";
         
         // 3. Detail Transaksi (Titik dua lurus)
         struk += rowKolom("Pulau/Pompa", pompa) + "\n";
         struk += rowKolom("Nama Produk", produk) + "\n";
         struk += rowKolom("Harga/Liter", "Rp. " + harga) + "\n";
-        struk += rowKolom("Volume  (L)", volume) + "\n";
+        struk += rowKolom("Volume", volume) + "\n"; // Tanpa (L)
         struk += rowKolom("Total Harga", "Rp. " + total) + "\n";
         struk += rowKolom("Operator", operator) + "\n";
         
-        struk += "\n"; // Spasi kosong
-        struk += center("CASH") + "\n";
+        struk += "\n";
+        struk += "CASH" + "\n"; // Rata kiri
         struk += "\n";
         
-        // 4. Footer
+        // 4. Informasi Tambahan (No Plat, Catatan)
+        struk += "No. Plat : " + no_plat + "\n";
+        if (catatan_plat) { // Tampilkan catatan jika ada
+            struk += catatan_plat + "\n";
+        }
+        struk += "--------------------------------\n";
+        
+        // 5. Footer
         struk += center("Terima Kasih") + "\n";
         struk += center("Selamat Jalan") + "\n";
         struk += center("Semoga Selamat") + "\n";
         struk += center("Sampai Tujuan") + "\n";
         
-        struk += "\n\n\n"; // Jarak potong
+        struk += "\n\n\n"; // Jarak potong kertas
         
-        // 5. Kirim via protocol RawBT
+        // Kirim via protocol RawBT
         window.location.href = "rawbt:base64," + btoa(struk);
     }
 </script>
