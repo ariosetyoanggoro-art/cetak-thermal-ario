@@ -4,183 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Struk SPBU Pertamina</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
-        /* Sembunyikan form saat mode cetak browser */
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; padding: 0 !important; margin: 0 !important; }
             .container { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; }
         }
 
-        body { font-family: 'Courier New', Courier, monospace; background: #f0f2f5; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        body { font-family: 'VT323', monospace; background: #f0f2f5; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .container { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 100%; max-width: 350px; box-sizing: border-box; }
         
-        /* Gaya Input Form */
         h2 { text-align: center; color: #003399; margin: 0 0 15px 0; font-family: sans-serif; }
         .form-group { margin-bottom: 8px; }
         label { display: block; font-size: 12px; color: #666; margin-bottom: 3px; font-family: sans-serif; }
-        input, textarea, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; font-family: sans-serif; }
-        textarea { height: 60px; resize: none; }
-        .btn-print { width: 100%; padding: 12px; background: #003399; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 15px; cursor: pointer; font-family: sans-serif; }
+        input, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; font-family: sans-serif; }
+        button { width: 100%; padding: 12px; background: #003399; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 15px; cursor: pointer; font-family: sans-serif; }
 
-        /* Gaya Preview Struk (58mm) */
         .receipt-preview { 
-            background: #fff; 
-            padding: 5px; 
-            margin-top: 20px; 
-            border: 1px solid #ddd; 
-            width: 300px; 
-            font-size: 16px; 
-            font-weight: 500;
-            color: #000;
-            line-height: 1.1;
-            font-family: Arial, Helvetica, sans-serif;
+            background: #fff; padding: 10px; margin-top: 20px; border: 1px solid #ddd; width: 300px; 
+            font-size: 20px; line-height: 1.0; color: #000;
         }
         .center { text-align: center; }
-        .bold { font-weight: bold; font-size: 1.1em; }
+        .bold { font-weight: bold; font-size: 1.2em; }
         .line { border-top: 1px dashed #000; margin: 8px 0; }
         .flex { display: flex; justify-content: space-between; }
         .logo-img { width: 140px; display: block; margin: 0 auto 5px auto; }
         .item-row { display: flex; margin-bottom: 2px; }
         .item-label { width: 130px; flex-shrink: 0; }
-        .item-val { flex-grow: 1; text-align: left; }
     </style>
 </head>
 <body>
 
 <div class="container no-print">
     <h2>Form Struk SPBU</h2>
-    <div class="form-group">
-        <label>Nomor Kode (Bold)</label>
-        <input type="text" id="in_kode" value="54.631.10" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Nama SPBU</label>
-        <input type="text" id="in_spbu" value="SPBU DS. PELEM" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Alamat/Lokasi</label>
-        <input type="text" id="in_alamat" value="JALAN PELANDUAN NO.12" oninput="updatePreview()">
-    </div>
-    <div class="flex-row" style="display:flex; gap:10px;">
-        <div class="form-group" style="flex:1">
-            <label>Shift</label>
-            <input type="text" id="in_shift" value="2" oninput="updatePreview()">
-        </div>
-        <div class="form-group" style="flex:1">
-            <label>No. Trans</label>
-            <input type="text" id="in_trans" value="003844" oninput="updatePreview()">
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Waktu</label>
-        <input type="text" id="in_waktu" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Produk</label>
-        <input type="text" id="in_produk" value="PERTALITE" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Pompa</label>
-        <input type="text" id="in_pompa" value="1/2" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Harga/L</label>
-        <input type="number" id="in_harga" value="10000" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Volume (L)</label>
-        <input type="number" id="in_vol" value="1.50" step="0.01" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>No. Plat</label>
-        <input type="text" id="in_plat" value="B 1234 CD" oninput="updatePreview()">
-    </div>
-    <div class="form-group">
-        <label>Keterangan/Catatan</label>
-        <textarea id="in_note" placeholder="Tulis catatan..." oninput="updatePreview()"></textarea>
-    </div>
+    <input type="text" id="in_kode" value="54.631.10" oninput="updatePreview()">
+    <input type="text" id="in_spbu" value="SPBU DS. PELEM" oninput="updatePreview()">
+    <input type="text" id="in_alamat" value="JALAN PELANDUAN NO.12" oninput="updatePreview()">
+    <input type="text" id="in_shift" value="2" oninput="updatePreview()">
+    <input type="text" id="in_trans" value="003844" oninput="updatePreview()">
+    <input type="text" id="in_waktu" oninput="updatePreview()">
+    <input type="text" id="in_pompa" value="1/2" oninput="updatePreview()">
+    <input type="text" id="in_produk" value="PERTALITE" oninput="updatePreview()">
+    <input type="number" id="in_harga" value="10000" oninput="updatePreview()">
+    <input type="number" id="in_vol" value="1.50" oninput="updatePreview()">
+    <input type="text" id="in_plat" value="B 1234 CD" oninput="updatePreview()">
+    <textarea id="in_note" oninput="updatePreview()"></textarea>
 
     <button class="btn-print" onclick="window.print()">CETAK STRUK SEKARANG</button>
 </div>
 
-<!-- INI ADALAH PREVIEW NYA -->
 <div class="receipt-preview" id="receipt">
     <img class="logo-img" src="logo-pertamina.png" alt="Logo">
-    <div class="center bold" id="out_kode">54.631.10</div>
-    <div class="center" id="out_spbu">SPBU DS. PELEM</div>
-    <div class="center" id="out_alamat">JALAN PELANDUAN NO.12</div>
-    
+    <div class="center bold" id="out_kode"></div>
+    <div class="center" id="out_spbu"></div>
+    <div class="center" id="out_alamat"></div>
     <div style="margin-top:5px;">
-        <span>Shift: <span id="out_shift">2</span></span>
-        <span style="float:right;">No.Trans: <span id="out_trans">003844</span></span>
+        <span>Shift: <span id="out_shift"></span></span>
+        <span style="float:right;">No.Trans: <span id="out_trans"></span></span>
     </div>
-    <div id="out_waktu">--/--/---- --:--:--</div>
-    
+    <div id="out_waktu"></div>
     <div class="line"></div>
-    
-    <div class="item-row"><span class="item-label">Pulau/Pompa</span>: <span id="out_pompa">1/2</span></div>
-    <div class="item-row"><span class="item-label">Nama Produk</span>: <span id="out_produk">PERTALITE</span></div>
-    <div class="item-row"><span class="item-label">Harga/Liter</span>: Rp. <span id="out_harga">10.000</span></div>
-    <div class="item-row"><span class="item-label">Volume</span>: <span id="out_vol">1.50</span></div>
-    <div class="item-row"><span class="item-label">Total Harga</span>: Rp. <span id="out_total">15.000</span></div>
+    <div class="item-row"><span class="item-label">Pulau/Pompa</span>: <span id="out_pompa"></span></div>
+    <div class="item-row"><span class="item-label">Nama Produk</span>: <span id="out_produk"></span></div>
+    <div class="item-row"><span class="item-label">Harga/Liter</span>: Rp. <span id="out_harga"></span></div>
+    <div class="item-row"><span class="item-label">Volume</span>: <span id="out_vol"></span></div>
+    <div class="item-row"><span class="item-label">Total Harga</span>: Rp. <span id="out_total"></span></div>
     <div class="item-row"><span class="item-label">Operator</span>: BAMBANG</div>
-    
     <div class="line"></div>
-    
     <div class="flex">
         <span>CASH</span>
-        <span>Rp. <span id="out_cash_total">15.000</span></span>
+        <span>Rp. <span id="out_cash_total"></span></span>
     </div>
-    
-    <div style="margin-top:10px;"></div>
+    <br>
     <div class="line"></div>
-    <div id="out_plat">No. Plat : B 1234 CD</div>
+    <div id="out_plat"></div>
     <div class="line"></div>
-    
-    <div id="out_note" style="margin-top:5px; white-space: pre-wrap;"></div>
+    <div id="out_note" style="white-space: pre-wrap;"></div>
 </div>
 
 <script>
-    function formatRibuan(n) {
-        return Number(n).toLocaleString('id-ID');
-    }
-
     function updatePreview() {
         document.getElementById('out_kode').innerText = document.getElementById('in_kode').value;
         document.getElementById('out_spbu').innerText = document.getElementById('in_spbu').value;
         document.getElementById('out_alamat').innerText = document.getElementById('in_alamat').value;
         document.getElementById('out_shift').innerText = document.getElementById('in_shift').value;
         document.getElementById('out_trans').innerText = document.getElementById('in_trans').value;
-        
-        // Waktu
-        let w = document.getElementById('in_waktu').value;
-        if(!w) {
-            const now = new Date();
-            w = now.toLocaleString('id-ID');
-        }
-        document.getElementById('out_waktu').innerText = "Waktu : " + w;
-
-        // Detail
+        document.getElementById('out_waktu').innerText = "Waktu : " + (document.getElementById('in_waktu').value || new Date().toLocaleString());
         document.getElementById('out_pompa').innerText = document.getElementById('in_pompa').value;
         document.getElementById('out_produk').innerText = document.getElementById('in_produk').value;
-        
         let h = document.getElementById('in_harga').value;
         let v = document.getElementById('in_vol').value;
-        let total = h * v;
-        
-        document.getElementById('out_harga').innerText = formatRibuan(h);
+        document.getElementById('out_harga').innerText = Number(h).toLocaleString('id-ID');
         document.getElementById('out_vol').innerText = v;
-        document.getElementById('out_total').innerText = formatRibuan(total);
-        document.getElementById('out_cash_total').innerText = formatRibuan(total);
-        
+        document.getElementById('out_total').innerText = Number(h*v).toLocaleString('id-ID');
+        document.getElementById('out_cash_total').innerText = Number(h*v).toLocaleString('id-ID');
         document.getElementById('out_plat').innerText = "No. Plat : " + document.getElementById('in_plat').value;
         document.getElementById('out_note').innerText = document.getElementById('in_note').value;
     }
-
-    // Jalankan sekali saat load
     window.onload = updatePreview;
 </script>
-
 </body>
 </html>
