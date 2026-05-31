@@ -148,8 +148,8 @@
         var garis = '--------------------------------';
         var s = '';
 
-        // Logo Pertamina as internal file image tag
-        s += '<img>logo-pertamina.png</img>\n';
+        // Logo Pertamina as full URL image tag so RawBT can fetch it
+        s += '<img>https://ariosetyoanggoro-art.github.io/cetak-thermal-ario/logo-pertamina.png</img>\n';
 
         // Nomor SPBU (Bold via ESC/POS)
         s += center('\x1b\x45\x01' + nomor_spbu + '\x1b\x45\x00') + '\n';
