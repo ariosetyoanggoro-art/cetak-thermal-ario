@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Struk SPBU</title>
+    <title>Struk Pertamina Lengkap</title>
     <style>
         body { font-family: sans-serif; background: #eef1f5; margin: 0; padding: 20px; }
         .container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -13,114 +13,150 @@
         input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         button { width: 100%; padding: 14px; background: #003399; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         button:active { background: #002266; }
+        .flex-row { display: flex; gap: 10px; }
+        .flex-row .form-group { flex: 1; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Input Data Struk</h2>
+    <h2>Form Input Struk</h2>
     
     <div class="form-group">
-        <label>Nama SPBU</label>
-        <input type="text" id="spbu" value="SPBU 31.21106">
+        <label>Nomor Atas (Bold)</label>
+        <input type="text" id="nomor_atas" value="54.631.10">
     </div>
     <div class="form-group">
-        <label>Alamat Baris 1</label>
-        <input type="text" id="alamat1" value="JL. RAYA CILANGKAP">
+        <label>Nama Lokasi/SPBU</label>
+        <input type="text" id="lokasi" value="SPBU DS. PELEM">
     </div>
-    <div class="form-group">
-        <label>Alamat Baris 2</label>
-        <input type="text" id="alamat2" value="CIMAHI UTARA">
-    </div>
-    <div class="form-group">
-        <label>Telepon</label>
-        <input type="text" id="telp" value="TELP. 022-6654044">
+    
+    <div class="flex-row">
+        <div class="form-group">
+            <label>Shift</label>
+            <input type="text" id="shift" value="2">
+        </div>
+        <div class="form-group">
+            <label>No. Trans</label>
+            <input type="text" id="no_trans" value="3844">
+        </div>
     </div>
 
-    <hr style="border-top: 1px dashed #ccc; border-bottom: none;">
+    <div class="form-group">
+        <label>Waktu (Otomatis jika kosong)</label>
+        <input type="text" id="waktu" placeholder="Contoh: 15-05-2024 14:30:00">
+    </div>
+
+    <hr style="border-top: 1px dashed #ccc; border-bottom: none; margin: 15px 0;">
 
     <div class="form-group">
-        <label>Produk BBM</label>
-        <input type="text" id="produk" value="Pertalite">
+        <label>Pulau / Pompa</label>
+        <input type="text" id="pompa" value="1 / 2">
     </div>
     <div class="form-group">
-        <label>Nozzle / Pompa</label>
-        <input type="text" id="nozzle" value="1">
+        <label>Nama Produk</label>
+        <input type="text" id="produk" value="PERTALITE">
     </div>
     <div class="form-group">
-        <label>Harga Per Liter (Rp)</label>
+        <label>Harga / Liter (Rp)</label>
         <input type="number" id="harga" value="10000">
     </div>
     <div class="form-group">
-        <label>Jumlah Liter</label>
-        <input type="number" id="liter" value="1.00">
+        <label>Volume (L)</label>
+        <input type="number" id="volume" value="1.50" step="0.01">
     </div>
     <div class="form-group">
         <label>Total Harga (Rp)</label>
-        <input type="number" id="total" value="10000">
+        <input type="number" id="total" value="15000">
     </div>
     <div class="form-group">
-        <label>Nama/ID Kasir</label>
-        <input type="text" id="kasir" value="3">
+        <label>Operator</label>
+        <input type="text" id="operator" value="BAMBANG">
     </div>
 
     <button onclick="cetak()">CETAK STRUK</button>
 </div>
 
 <script>
-    function cetak() {
-        // Mengambil data dari form
-        const spbu = document.getElementById('spbu').value.toUpperCase();
-        const al1 = document.getElementById('alamat1').value.toUpperCase();
-        const al2 = document.getElementById('alamat2').value.toUpperCase();
-        const telp = document.getElementById('telp').value.toUpperCase();
-        
-        const produk = document.getElementById('produk').value;
-        const nozzle = document.getElementById('nozzle').value;
-        const harga = parseInt(document.getElementById('harga').value).toLocaleString('id-ID');
-        const liter = document.getElementById('liter').value;
-        const total = "Rp. " + parseInt(document.getElementById('total').value).toLocaleString('id-ID');
-        const kasir = document.getElementById('kasir').value;
-        
-        const tgl = new Date().toLocaleString('id-ID', { 
-            day: '2-digit', month: '2-digit', year: 'numeric', 
-            hour: '2-digit', minute: '2-digit', second: '2-digit' 
-        });
+    function formatRibuan(angka) {
+        return parseInt(angka).toLocaleString('id-ID');
+    }
 
-        // Fungsi formatting printer thermal (lebar 32 karakter)
+    function cetak() {
+        const nomor_atas = document.getElementById('nomor_atas').value;
+        const lokasi = document.getElementById('lokasi').value;
+        const shift = document.getElementById('shift').value;
+        const no_trans = document.getElementById('no_trans').value;
+        
+        let waktuInput = document.getElementById('waktu').value;
+        if (!waktuInput) {
+            const now = new Date();
+            const pad = (n) => n.toString().padStart(2, '0');
+            waktuInput = `${pad(now.getDate())}-${pad(now.getMonth()+1)}-${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+        }
+        
+        const pompa = document.getElementById('pompa').value;
+        const produk = document.getElementById('produk').value;
+        const harga = formatRibuan(document.getElementById('harga').value);
+        const volume = parseFloat(document.getElementById('volume').value).toFixed(2);
+        const total = formatRibuan(document.getElementById('total').value);
+        const operator = document.getElementById('operator').value;
+        
+        // --- FORMATTING (Lebar Kertas 58mm = max ~32 karakter) ---
+        // Jika 32 kekecilan, RawBT biasanya dukung 32 atau 48 tergantung font. Kita pakai standar 32.
+        const LINE_WIDTH = 32;
+
         const center = (txt) => {
-            let space = Math.max(0, Math.floor((32 - txt.length) / 2));
+            let space = Math.max(0, Math.floor((LINE_WIDTH - txt.length) / 2));
             return " ".repeat(space) + txt;
         };
 
-        // Fungsi membuat baris rata kiri-kanan
-        const row = (kiri, kanan) => {
-            let space = 32 - (kiri.length + kanan.length);
-            return kiri + " ".repeat(Math.max(1, space)) + kanan;
+        // Fungsi khusus agar titik dua (:) lurus rapi (Rata Kiri, Tengah, Kanan)
+        const rowKolom = (label, value) => {
+            // Label kita patok lebarnya 13 karakter
+            const labelPad = label.padEnd(14, ' '); 
+            // Sisa ruang untuk value: 32 - 14 - 1(spasi) - 1(titik dua) = 16
+            // Kita gabung: LABEL (14) + ": " + VALUE
+            return labelPad + ": " + value;
         };
 
         let struk = "";
-        struk += center("PERTAMINA") + "\n"; // Logo Text
-        struk += center(spbu) + "\n";
-        struk += center(al1) + "\n";
-        struk += center(al2) + "\n";
-        struk += center(telp) + "\n";
-        struk += "--------------------------------\n";
-        struk += center(tgl) + "\n";
-        struk += "--------------------------------\n";
-        struk += row("PRODUK", ": " + produk) + "\n";
-        struk += row("NOZZLE", ": " + nozzle) + "\n";
-        struk += row("HARGA/L", ": " + harga) + "\n";
-        struk += row("LITER", ": " + liter) + "\n";
-        struk += "--------------------------------\n";
-        struk += row("TOTAL", ": " + total) + "\n";
-        struk += "--------------------------------\n";
-        struk += center("TERIMA KASIH") + "\n";
-        struk += center("SELAMAT JALAN") + "\n";
-        struk += row("KASIR", ": " + kasir) + "\n";
-        struk += "\n\n\n"; // Jarak potong kertas
-
-        // Kirim ke RawBT
+        
+        // 1. Gambar Logo (Khusus printer ESC/POS via RawBT)
+        // Kita menyisipkan tag gambar ESC/POS. RawBT mendukung <image> base64 atau URL online jika format HTML raw.
+        // Cara paling aman dengan text ESC/POS adalah pakai kode khusus RawBT image tag.
+        // URL SVG Wikimedia tidak bisa langsung dicetak, kita pakai placeholder Teks Besar atau instruksi logo image.
+        struk += "<img>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Pertamina_Logo.svg/320px-Pertamina_Logo.svg.png</img>\n";
+        
+        // 2. Teks Utama
+        // Bold: <b>...</b>
+        struk += center("<b>" + nomor_atas + "</b>") + "\n";
+        struk += center(lokasi) + "\n";
+        struk += center("Shift: " + shift + "   No. Trans: " + no_trans) + "\n";
+        struk += center("Waktu: " + waktuInput) + "\n";
+        struk += "\n"; // Spasi kosong
+        
+        // 3. Detail Transaksi (Titik dua lurus)
+        struk += rowKolom("Pulau/Pompa", pompa) + "\n";
+        struk += rowKolom("Nama Produk", produk) + "\n";
+        struk += rowKolom("Harga/Liter", "Rp. " + harga) + "\n";
+        struk += rowKolom("Volume  (L)", volume) + "\n";
+        struk += rowKolom("Total Harga", "Rp. " + total) + "\n";
+        struk += rowKolom("Operator", operator) + "\n";
+        
+        struk += "\n"; // Spasi kosong
+        struk += center("CASH") + "\n";
+        struk += "\n";
+        
+        // 4. Footer
+        struk += center("Terima Kasih") + "\n";
+        struk += center("Selamat Jalan") + "\n";
+        struk += center("Semoga Selamat") + "\n";
+        struk += center("Sampai Tujuan") + "\n";
+        
+        struk += "\n\n\n"; // Jarak potong
+        
+        // 5. Kirim via protocol RawBT
         window.location.href = "rawbt:base64," + btoa(struk);
     }
 </script>
