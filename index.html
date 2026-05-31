@@ -40,7 +40,8 @@
         }
         .logo-img { width: 120px; display: block; margin: 0 auto 5px auto; }
         .item-row { display: flex; }
-        .item-label { width: 130px; flex-shrink: 0; }
+        .item-label { width: 150px; flex-shrink: 0; }
+        .item-value-prefix { width: 40px; display: inline-block; flex-shrink: 0; }
         .flex-between { display: flex; justify-content: space-between; }
     </style>
 </head>
@@ -83,7 +84,7 @@
         <input type="text" id="in_pompa" value="1/2" oninput="updatePreview()">
     </div>
     <div class="form-group">
-        <label>Harga Per Liter (Rp)</label>
+        <label>Harga Per Liter (Tanpa Rp)</label>
         <input type="text" id="in_harga" value="10000" oninput="updatePreview()">
     </div>
     <div class="form-group">
@@ -117,12 +118,12 @@
     
     <div class="line"></div>
     
-    <div class="item-row"><span class="item-label">Pulau/Pompa</span>: <span id="out_pompa"></span></div>
-    <div class="item-row"><span class="item-label">Nama Produk</span>: <span id="out_produk"></span></div>
-    <div class="item-row"><span class="item-label">Harga/Liter</span>: Rp.<span id="out_harga"></span></div>
-    <div class="item-row"><span class="item-label">Volume</span>: (L) <span id="out_vol"></span></div>
-    <div class="item-row"><span class="item-label">Total Harga</span>: Rp.<span id="out_total"></span></div>
-    <div class="item-row"><span class="item-label">Operator</span>: BAMBANG</div>
+    <div class="item-row"><span class="item-label">Pulau/Pompa</span>: <span class="item-value-prefix"></span><span id="out_pompa"></span></div>
+    <div class="item-row"><span class="item-label">Nama Produk</span>: <span class="item-value-prefix"></span><span id="out_produk"></span></div>
+    <div class="item-row"><span class="item-label">Harga/Liter</span>: <span class="item-value-prefix">Rp.</span><span id="out_harga"></span></div>
+    <div class="item-row"><span class="item-label">Volume</span>: <span class="item-value-prefix">(L)</span><span id="out_vol"></span></div>
+    <div class="item-row"><span class="item-label">Total Harga</span>: <span class="item-value-prefix">Rp.</span><span id="out_total"></span></div>
+    <div class="item-row"><span class="item-label">Operator</span>: <span class="item-value-prefix"></span>BAMBANG</div>
     
     <div class="line"></div>
     
