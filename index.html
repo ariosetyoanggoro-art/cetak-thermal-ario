@@ -27,7 +27,15 @@
         }
         .center { text-align: center; }
         .bold { font-weight: bold; font-size: 0.9em; border-bottom: 1px solid transparent; }
-        .line { border-top: 1px dashed #000; border-bottom: none; border-left: none; border-right: none; margin: 8px 0; height: 0; letter-spacing: 2px; }
+        .line { 
+            border: none;
+            height: 1px;
+            background-image: linear-gradient(to right, #000 60%, rgba(255,255,255,0) 0%);
+            background-position: top;
+            background-size: 8px 1px;
+            background-repeat: repeat-x;
+            margin: 10px 0;
+        }
         .logo-img { width: 120px; display: block; margin: 0 auto 5px auto; }
         .item-row { display: flex; }
         .item-label { width: 140px; flex-shrink: 0; }
@@ -97,17 +105,18 @@
     <div class="center bold" id="out_kode"></div>
     <div class="center" id="out_spbu"></div>
     <div class="center" id="out_alamat"></div>
-    <div style="margin-top:5px;">
-        <span>Shift: <span id="out_shift"></span></span>
-        <span style="float:right;">No.Trans: <span id="out_trans"></span></span>
-    </div>
-    <div id="out_waktu"></div>
+    
+    <div id="out_shift_row" class="item-row"><span class="item-label">Shift</span>: <span id="out_shift"></span></div>
+    <div id="out_trans_row" class="item-row"><span class="item-label">No. Trans</span>: <span id="out_trans"></span></div>
+    <div id="out_waktu_row" class="item-row"><span class="item-label">Waktu</span>: <span id="out_waktu"></span></div>
+    
     <div class="line"></div>
+    
     <div class="item-row"><span class="item-label">Pulau/Pompa</span>: <span id="out_pompa"></span></div>
     <div class="item-row"><span class="item-label">Nama Produk</span>: <span id="out_produk"></span></div>
-    <div class="item-row"><span class="item-label">Harga/Liter</span>: Rp.<span id="out_harga"></span></div>
+    <div class="item-row"><span class="item-label">Harga/Liter</span>: <span id="out_harga"></span></div>
     <div class="item-row"><span class="item-label">Volume</span>: <span id="out_vol"></span></div>
-    <div class="item-row"><span class="item-label">Total Harga</span>: Rp.<span id="out_total"></span></div>
+    <div class="item-row"><span class="item-label">Total Harga</span>: <span id="out_total"></span></div>
     <div class="item-row"><span class="item-label">Operator</span>: BAMBANG</div>
     <div class="line"></div>
     <div class="flex">
@@ -124,23 +133,42 @@
 </div>
 
 <script>
-    function formatRibuan(n) { return Number(n).toLocaleString('id-ID'); }
+    function formatRibuan(n) { return Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+    
+    function getIndonesianDateTime(inputVal) {
+        if (inputVal) return inputVal;
+        const now = new Date();
+        const d = String(now.getDate()).padStart(2, '0');
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const y = now.getFullYear();
+        const h = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        return `${d}/${m}/${y} ${h}:${min}:${s}`;
+    }
+
     function updatePreview() {
         document.getElementById('out_kode').innerText = document.getElementById('in_kode').value;
         document.getElementById('out_spbu').innerText = document.getElementById('in_spbu').value;
         document.getElementById('out_alamat').innerText = document.getElementById('in_alamat').value;
         document.getElementById('out_shift').innerText = document.getElementById('in_shift').value;
         document.getElementById('out_trans').innerText = document.getElementById('in_trans').value;
-        document.getElementById('out_waktu').innerText = "Waktu : " + (document.getElementById('in_waktu').value || new Date().toLocaleString());
+        
+        document.getElementById('out_waktu').innerText = getIndonesianDateTime(document.getElementById('in_waktu').value);
+
         document.getElementById('out_pompa').innerText = document.getElementById('in_pompa').value;
         document.getElementById('out_produk').innerText = document.getElementById('in_produk').value;
-        let h = parseFloat(document.getElementById('in_harga').value || 0);
+        
+        let hText = document.getElementById('in_harga').value.replace(/\./g, '');
+        let h = parseFloat(hText || 0);
         let v = parseFloat(document.getElementById('in_vol').value || 0);
         let total = h * v;
+        
         document.getElementById('out_harga').innerText = formatRibuan(h);
         document.getElementById('out_vol').innerText = v;
         document.getElementById('out_total').innerText = formatRibuan(total);
         document.getElementById('out_cash_total').innerText = formatRibuan(total);
+        
         document.getElementById('out_plat').innerText = "No. Plat : " + document.getElementById('in_plat').value;
         document.getElementById('out_note').innerText = document.getElementById('in_note').value;
     }
@@ -149,7 +177,10 @@
         var spbu = document.getElementById('in_kode').value;
         var nama = document.getElementById('in_spbu').value;
         var alamat = document.getElementById('in_alamat').value;
-        var total = document.getElementById('in_harga').value * document.getElementById('in_vol').value;
+        var hText = document.getElementById('in_harga').value.replace(/\./g, '');
+        var hRaw = parseFloat(hText || 0);
+        var vRaw = parseFloat(document.getElementById('in_vol').value || 0);
+        var total = hRaw * vRaw;
         
         var W = 32;
 
@@ -159,47 +190,44 @@
             return new Array(sp + 1).join(' ') + txt;
         }
 
-        function row(left, right) {
-            var space = W - (left.length + right.length);
-            return left + new Array(Math.max(1, space) + 1).join(' ') + right;
-        }
-
         function rowKolom(label, value) {
-            while (label.length < 14) { label = label + ' '; }
-            return label + ': ' + value;
+            // Kita buat label padding agar titik dua sejajar (lebar label ~14)
+            var paddedLabel = label.padEnd(14, ' ');
+            return paddedLabel + ': ' + value;
         }
 
         function formatRp(n) {
-            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
 
-        // Initialize Printer and Reset Bold
         var s = '\x1b\x40'; 
-        
-        // Logo (RawBT tag)
         s += '<img>https://ariosetyoanggoro-art.github.io/cetak-thermal-ario/logo-pertamina.png</img>\n';
         
-        // Nomor SPBU (Hanya ini yang BOLD)
         var spNomor = Math.floor((W - spbu.length) / 2);
         s += new Array(spNomor + 1).join(' ') + '\x1b\x45\x01' + spbu + '\x1b\x45\x00\n';
         
         s += center(nama) + '\n';
         s += center(alamat) + '\n';
-        s += 'Shift : ' + document.getElementById('in_shift').value + '   No.Trans: ' + document.getElementById('in_trans').value + '\n';
-        s += 'Waktu : ' + (document.getElementById('in_waktu').value || new Date().toLocaleString()) + '\n';
-        s += '--------------------------------\n';
+        
+        s += rowKolom('Shift', document.getElementById('in_shift').value) + '\n';
+        s += rowKolom('No. Trans', document.getElementById('in_trans').value) + '\n';
+        s += rowKolom('Waktu', getIndonesianDateTime(document.getElementById('in_waktu').value)) + '\n';
+        
+        var garis = '--------------------------------';
+        s += garis + '\n';
         s += rowKolom('Pulau/Pompa', document.getElementById('in_pompa').value) + '\n';
         s += rowKolom('Nama Produk', document.getElementById('in_produk').value) + '\n';
-        s += rowKolom('Harga/Liter', 'Rp.' + formatRp(document.getElementById('in_harga').value)) + '\n';
+        s += rowKolom('Harga/Liter', formatRp(hRaw)) + '\n';
         s += rowKolom('Volume', document.getElementById('in_vol').value) + '\n';
-        s += rowKolom('Total Harga', 'Rp.' + formatRp(total)) + '\n';
+        s += rowKolom('Total Harga', formatRp(total)) + '\n';
         s += rowKolom('Operator', 'BAMBANG') + '\n';
-        s += '--------------------------------\n';
-        s += row('CASH', 'Rp.' + formatRp(total)) + '\n';
+        s += garis + '\n';
+        s += 'CASH\n';
+        s += new Array(W - formatRp(total).length + 1).join(' ') + formatRp(total) + '\n';
         s += '\n';
-        s += '--------------------------------\n';
+        s += garis + '\n';
         s += 'No. Plat : ' + document.getElementById('in_plat').value + '\n';
-        s += '--------------------------------\n';
+        s += garis + '\n';
         
         var note = document.getElementById('in_note').value;
         if (note) {
