@@ -3,39 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Struk SPBU Pertamina</title>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <title>Struk SPBU Pertamina</title>
     <style>
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; padding: 0 !important; margin: 0 !important; }
-            .receipt-preview { width: 100% !important; border: none !important; margin: 0 !important; padding: 0 !important; }
-        }
-        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .container { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 100%; max-width: 350px; box-sizing: border-box; }
-        h2 { text-align: center; color: #003399; margin: 0 0 10px 0; font-size: 16px; }
-        .form-group { margin-bottom: 6px; }
-        label { display: block; font-size: 11px; color: #666; }
-        input, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
-        button { width: 100%; padding: 12px; background: #003399; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; }
-        .btn-raw { background: #d9534f; margin-top: 5px; }
-
+        body { font-family: sans-serif; background: #eef1f5; margin: 0; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #003399; margin-top: 0; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-size: 14px; color: #555; margin-bottom: 4px; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        textarea { resize: vertical; min-height: 60px; }
+        button { width: 100%; padding: 14px; background: #003399; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         .receipt-preview { 
-            background: #fff; padding: 5px; margin-top: 20px; border: 1px solid #ddd; width: 300px; 
+            background: #fff; padding: 10px; margin-top: 20px; border: 1px solid #ddd; width: 300px; 
             font-size: 20px; font-weight: 400; color: #000; line-height: 1.1;
-            font-family: 'DotGothic16', sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
         .center { text-align: center; }
-        .bold { font-weight: bold; font-size: 0.9em; border-bottom: 1px solid transparent; }
-        .line { 
-            border: none;
-            height: 1px;
-            background-image: linear-gradient(to right, #000 60%, rgba(255,255,255,0) 0%);
-            background-position: top;
-            background-size: 8px 1px;
-            background-repeat: repeat-x;
-            margin: 10px 0;
-        }
+        .bold { font-weight: bold; }
+        .line { border: none; border-top: 2px dashed #000; margin: 8px 0; }
         .logo-img { width: 120px; display: block; margin: 0 auto 5px auto; }
         .item-row { display: flex; }
         .item-label { width: 140px; flex-shrink: 0; }
@@ -43,203 +28,81 @@
 </head>
 <body>
 
-<div class="container no-print">
-    <h2>Form Struk SPBU</h2>
-    <div class="form-group">
-        <label>Nomor Kode (Hanya Muncul di Bawah Logo)</label>
-        <input type="text" id="in_kode" value="54.631.10" oninput="updatePreview()" placeholder="Contoh: 54.631.10">
-    </div>
-    <div class="form-group">
-        <label>Nama SPBU / Stasiun</label>
-        <input type="text" id="in_spbu" value="SPBU DS. PELEM" oninput="updatePreview()" placeholder="Contoh: SPBU DS. PELEM">
-    </div>
-    <div class="form-group">
-        <label>Alamat Lengkap SPBU</label>
-        <input type="text" id="in_alamat" value="JALAN PELANDUAN NO.12" oninput="updatePreview()" placeholder="Contoh: JALAN PELANDUAN NO.12">
-    </div>
+<div class="container">
+    <h2>Input Data Struk</h2>
+    <div class="form-group"><label>Nomor Kode</label><input type="text" id="in_kode" value="54.631.10"></div>
+    <div class="form-group"><label>Nama SPBU</label><input type="text" id="in_spbu" value="SPBU DS. PELEM"></div>
+    <div class="form-group"><label>Alamat</label><input type="text" id="in_alamat" value="JALAN PELANDUAN NO.12"></div>
     <div class="flex-row" style="display:flex; gap:10px;">
-        <div class="form-group" style="flex:1">
-            <label>Shift (1-3)</label>
-            <input type="text" id="in_shift" value="2" oninput="updatePreview()" placeholder="2">
-        </div>
-        <div class="form-group" style="flex:1">
-            <label>Nomor Transaksi</label>
-            <input type="text" id="in_trans" value="003844" oninput="updatePreview()" placeholder="003844">
-        </div>
+        <div class="form-group" style="flex:1"><label>Shift</label><input type="text" id="in_shift" value="2"></div>
+        <div class="form-group" style="flex:1"><label>No. Trans</label><input type="text" id="in_trans" value="003844"></div>
     </div>
-    <div class="form-group">
-        <label>Waktu Transaksi</label>
-        <input type="text" id="in_waktu" oninput="updatePreview()" placeholder="DD/MM/YYYY HH:MM:SS">
-    </div>
-    <div class="form-group">
-        <label>Nama Produk BBM</label>
-        <input type="text" id="in_produk" value="PERTALITE" oninput="updatePreview()" placeholder="PERTALITE / PERTAMAX">
-    </div>
-    <div class="form-group">
-        <label>Nomor Pulau / Pompa</label>
-        <input type="text" id="in_pompa" value="1/2" oninput="updatePreview()" placeholder="1/2">
-    </div>
-    <div class="form-group">
-        <label>Harga Per Liter (Rp)</label>
-        <input type="text" id="in_harga" value="10000" oninput="updatePreview()" placeholder="10000">
-    </div>
-    <div class="form-group">
-        <label>Volume / Jumlah Liter</label>
-        <input type="text" id="in_vol" value="1.50" oninput="updatePreview()" placeholder="1.50">
-    </div>
-    <div class="form-group">
-        <label>Nomor Plat Kendaraan</label>
-        <input type="text" id="in_plat" value="B 1234 CD" oninput="updatePreview()" placeholder="B 1234 CD">
-    </div>
-    <div class="form-group">
-        <label>Keterangan Tambahan / Catatan</label>
-        <textarea id="in_note" placeholder="Tambahkan catatan khusus di sini..." oninput="updatePreview()"></textarea>
-    </div>
-    
-    <button onclick="window.print()">CETAK STRUK (HTML/PREVIEW)</button>
-    <button class="btn-raw" onclick="cetakRaw()">CETAK LANGSUNG (RAW)</button>
-</div>
-
-<div class="receipt-preview" id="receipt">
-    <img class="logo-img" src="logo-pertamina.png" alt="Logo">
-    <div class="center bold" id="out_kode"></div>
-    <div class="center" id="out_spbu"></div>
-    <div class="center" id="out_alamat"></div>
-    
-    <div style="display: flex; justify-content: space-between;">
-        <div>Shift : <span id="out_shift"></span></div>
-        <div>No. Trans : <span id="out_trans"></span></div>
-    </div>
-    <div>Waktu : <span id="out_waktu"></span></div>
-    
-    <div class="line"></div>
-    
-    <div class="item-row"><span class="item-label">Pulau/Pompa</span>: <span id="out_pompa"></span></div>
-    <div class="item-row"><span class="item-label">Nama Produk</span>: <span id="out_produk"></span></div>
-    <div class="item-row"><span class="item-label">Harga/Liter</span>: <span id="out_harga"></span></div>
-    <div class="item-row"><span class="item-label">Volume</span>: <span id="out_vol"></span></div>
-    <div class="item-row"><span class="item-label">Total Harga</span>: <span id="out_total"></span></div>
-    <div class="item-row"><span class="item-label">Operator</span>: BAMBANG</div>
-    <div class="line"></div>
-    <div class="flex">
-        <span>CASH</span>
-    </div>
-    <div style="text-align:right;">
-        <span id="out_cash_total"></span>
-    </div>
-    
-    <div class="line"></div>
-    <div id="out_plat"></div>
-    <div class="line"></div>
-    <div id="out_note" style="white-space: pre-wrap;"></div>
+    <div class="form-group"><label>Waktu</label><input type="text" id="in_waktu" placeholder="DD/MM/YYYY HH:MM:SS"></div>
+    <div class="form-group"><label>Nama Produk</label><input type="text" id="in_produk" value="PERTALITE"></div>
+    <div class="form-group"><label>Pompa</label><input type="text" id="in_pompa" value="1/2"></div>
+    <div class="form-group"><label>Harga/Liter (Rp)</label><input type="text" id="in_harga" value="10000"></div>
+    <div class="form-group"><label>Volume</label><input type="text" id="in_vol" value="1.50"></div>
+    <div class="form-group"><label>Total Harga (Rp)</label><input type="text" id="in_total" value="15000"></div>
+    <div class="form-group"><label>No. Plat</label><input type="text" id="in_plat" value="B 1234 CD"></div>
+    <div class="form-group"><label>Catatan</label><textarea id="in_note"></textarea></div>
+    <button onclick="cetakRaw()">CETAK LANGSUNG (RAW)</button>
 </div>
 
 <script>
-    function formatRibuan(n) { return Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
-    
-    function getIndonesianDateTime(inputVal) {
-        if (inputVal) return inputVal;
-        const now = new Date();
-        const d = String(now.getDate()).padStart(2, '0');
-        const m = String(now.getMonth() + 1).padStart(2, '0');
-        const y = now.getFullYear();
-        const h = String(now.getHours()).padStart(2, '0');
-        const min = String(now.getMinutes()).padStart(2, '0');
-        const s = String(now.getSeconds()).padStart(2, '0');
-        return `${d}/${m}/${y} ${h}:${min}:${s}`;
-    }
-
-    function updatePreview() {
-        document.getElementById('out_kode').innerText = document.getElementById('in_kode').value;
-        document.getElementById('out_spbu').innerText = document.getElementById('in_spbu').value;
-        document.getElementById('out_alamat').innerText = document.getElementById('in_alamat').value;
-        document.getElementById('out_shift').innerText = document.getElementById('in_shift').value;
-        document.getElementById('out_trans').innerText = document.getElementById('in_trans').value;
-        
-        document.getElementById('out_waktu').innerText = getIndonesianDateTime(document.getElementById('in_waktu').value);
-
-        document.getElementById('out_pompa').innerText = document.getElementById('in_pompa').value;
-        document.getElementById('out_produk').innerText = document.getElementById('in_produk').value;
-        
-        let hText = document.getElementById('in_harga').value.replace(/\./g, '');
-        let h = parseFloat(hText || 0);
-        let v = parseFloat(document.getElementById('in_vol').value || 0);
-        let total = h * v;
-        
-        document.getElementById('out_harga').innerText = formatRibuan(h);
-        document.getElementById('out_vol').innerText = v;
-        document.getElementById('out_total').innerText = formatRibuan(total);
-        document.getElementById('out_cash_total').innerText = formatRibuan(total);
-        
-        document.getElementById('out_plat').innerText = "No. Plat : " + document.getElementById('in_plat').value;
-        document.getElementById('out_note').innerText = document.getElementById('in_note').value;
-    }
-
+    function formatRibuan(n) { return Number(n).toLocaleString('id-ID'); }
     function cetakRaw() {
         var spbu = document.getElementById('in_kode').value;
         var nama = document.getElementById('in_spbu').value;
         var alamat = document.getElementById('in_alamat').value;
-        var hText = document.getElementById('in_harga').value.replace(/\./g, '');
-        var hRaw = parseFloat(hText || 0);
-        var vRaw = parseFloat(document.getElementById('in_vol').value || 0);
-        var total = hRaw * vRaw;
+        var shift = document.getElementById('in_shift').value;
+        var trans = document.getElementById('in_trans').value;
+        var waktu = document.getElementById('in_waktu').value || new Date().toLocaleString('id-ID');
+        var pompa = document.getElementById('in_pompa').value;
+        var produk = document.getElementById('in_produk').value;
+        var harga = document.getElementById('in_harga').value;
+        var vol = document.getElementById('in_vol').value;
+        var total = document.getElementById('in_total').value;
+        var plat = document.getElementById('in_plat').value;
+        var note = document.getElementById('in_note').value;
         
         var W = 32;
-
-        function center(txt) {
-            if (txt.length >= W) return txt;
-            var sp = Math.floor((W - txt.length) / 2);
-            return new Array(sp + 1).join(' ') + txt;
-        }
-
-        function rowKolom(label, value) {
-            // Kita buat label padding agar titik dua sejajar (lebar label ~14)
-            var paddedLabel = label.padEnd(14, ' ');
-            return paddedLabel + ': ' + value;
-        }
-
-        function formatRp(n) {
-            return Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        }
-
+        var garis = '--------------------------------';
         var s = '\x1b\x40'; 
         s += '<img>https://ariosetyoanggoro-art.github.io/cetak-thermal-ario/logo-pertamina.png</img>\n';
         
         var spNomor = Math.floor((W - spbu.length) / 2);
         s += new Array(spNomor + 1).join(' ') + '\x1b\x45\x01' + spbu + '\x1b\x45\x00\n';
-        
-        s += center(nama) + '\n';
-        s += center(alamat) + '\n';
-        
-        s += row('Shift : ' + document.getElementById('in_shift').value, 'No. Trans : ' + document.getElementById('in_trans').value) + '\n';
-        s += 'Waktu : ' + getIndonesianDateTime(document.getElementById('in_waktu').value) + '\n';
-        
-        var garis = '--------------------------------';
+        s += center(nama, W) + '\n';
+        s += center(alamat, W) + '\n';
+        s += 'Shift : ' + shift + '   No. Trans : ' + trans + '\n';
+        s += 'Waktu : ' + waktu + '\n';
         s += garis + '\n';
-        s += rowKolom('Pulau/Pompa', document.getElementById('in_pompa').value) + '\n';
-        s += rowKolom('Nama Produk', document.getElementById('in_produk').value) + '\n';
-        s += rowKolom('Harga/Liter', formatRp(hRaw)) + '\n';
-        s += rowKolom('Volume', document.getElementById('in_vol').value) + '\n';
-        s += rowKolom('Total Harga', formatRp(total)) + '\n';
-        s += rowKolom('Operator', 'BAMBANG') + '\n';
+        s += rowKolom('Pulau/Pompa', pompa, W) + '\n';
+        s += rowKolom('Nama Produk', produk, W) + '\n';
+        s += rowKolom('Harga/Liter', 'Rp.' + harga, W) + '\n';
+        s += rowKolom('Volume', '(L) ' + vol, W) + '\n';
+        s += rowKolom('Total Harga', 'Rp.' + total, W) + '\n';
+        s += rowKolom('Operator', 'BAMBANG', W) + '\n';
         s += garis + '\n';
-        s += 'CASH\n';
-        s += new Array(W - formatRp(total).length + 1).join(' ') + formatRp(total) + '\n';
-        s += '\n';
+        s += 'CASH' + '\n';
+        var totalStr = total.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        s += new Array(W - totalStr.length + 1).join(' ') + totalStr + '\n\n';
         s += garis + '\n';
-        s += 'No. Plat : ' + document.getElementById('in_plat').value + '\n';
+        s += 'No. Plat : ' + plat + '\n';
         s += garis + '\n';
-        
-        var note = document.getElementById('in_note').value;
-        if (note) {
-            s += note + '\n';
-        }
+        if (note) s += note + '\n';
         s += '\n\n\n';
 
         window.location.href = 'rawbt:base64,' + btoa(unescape(encodeURIComponent(s)));
     }
-
-    window.onload = updatePreview;
+    function center(txt, W) {
+        var sp = Math.floor((W - txt.length) / 2);
+        return new Array(sp + 1).join(' ') + txt;
+    }
+    function rowKolom(label, value, W) {
+        var res = label + ': ' + value;
+        return res;
+    }
 </script>
 </body>
 </html>
