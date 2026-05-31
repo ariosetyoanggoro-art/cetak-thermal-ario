@@ -3,139 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk SPBU Ario</title>
+    <title>Struk Pertamina</title>
     <style>
-        body { font-family: 'Courier New', Courier, monospace; background: #f0f2f5; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 320px; /* Lebar lebih sempit untuk printer 58mm */ }
-        h2 { text-align: center; color: #0062cc; /* Warna biru Pertamina */ }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; padding: 15px; background: #0062cc; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        button:active { background: #004c99; }
-        .footer { margin-top: 20px; font-size: 12px; color: #666; text-align: center; }
-        .receipt-preview-container { /* Untuk meniru tampilan struk */ margin-top: 20px; width: 100%; max-width: 320px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .receipt-line { border-bottom: 1px dashed #ccc; margin: 5px 0; }
-        .center { text-align: center; }
-        .bold { font-weight: bold; }
-        .flex-row { display: flex; justify-content: space-between; }
-        .nowrap { white-space: nowrap; } /* Agar harga tidak pecah baris */
+        body { font-family: 'Courier New', Courier, monospace; background: #f0f2f5; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .card { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 350px; }
+        input { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; margin-top: 10px; font-weight: bold; }
+        .logo-placeholder { text-align: center; font-weight: bold; border: 1px dashed #000; padding: 10px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-
 <div class="card">
-    <h2>SPBU Digital Ario</h2>
-    <input type="text" id="nama_stasiun" value="SPBU 31.XXXXX"> <!-- Placeholder Nama SPBU -->
-    
-    <label>Produk:</label>
-    <input type="text" id="produk" placeholder="Contoh: Pertamax 10L">
-    
-    <label>Jumlah (Liter):</label>
-    <input type="number" id="jumlah" placeholder="10">
-    
-    <label>Harga Per Liter (Rp):</label>
-    <input type="number" id="harga_per_liter" placeholder="12000">
-    
-    <label>Total Bayar (Rp):</label>
-    <input type="text" id="total_bayar" placeholder="120000" readonly disabled> <!-- Otomatis terisi -->
-
-    <label>Metode Bayar:</label>
-    <select id="metode">
-        <option value="TUNAI">TUNAI</option>
-        <option value="QRIS">QRIS</option>
-        <option value="DEBIT">DEBIT</option>
-        <option value="KREDIT">KREDIT</option>
-    </select>
-
-    <button onclick="cetakStruk()">CETAK STRUK</button>
+    <div class="logo-placeholder">[LOGO PERTAMINA]</div>
+    <input type="text" id="spbu" value="SPBU 31.XXXXX">
+    <input type="text" id="lokasi" value="JL. RAYA XXXXXX">
+    <input type="text" id="telp" value="TELP: (021) XXXXXXX">
+    <input type="text" id="produk" value="PERTAMAX">
+    <input type="number" id="liter" value="10.00">
+    <input type="number" id="harga" value="13200">
+    <button onclick="cetak()">CETAK STRUK</button>
 </div>
-
-<div class="footer">Aplikasi ini menggunakan RawBT untuk mencetak via Bluetooth.</div>
-
 <script>
-    // Hitung total bayar otomatis
-    const produkInput = document.getElementById('produk');
-    const jumlahInput = document.getElementById('jumlah');
-    const hargaPerLiterInput = document.getElementById('harga_per_liter');
-    const totalBayarInput = document.getElementById('total_bayar');
+function cetak() {
+    const spbu = document.getElementById('spbu').value;
+    const lokasi = document.getElementById('lokasi').value;
+    const telp = document.getElementById('telp').value;
+    const produk = document.getElementById('produk').value;
+    const liter = parseFloat(document.getElementById('liter').value);
+    const harga = parseInt(document.getElementById('harga').value);
+    const total = liter * harga;
+    const tgl = new Date().toLocaleString('id-ID');
 
-    const hitungTotal = () => {
-        const jumlah = parseFloat(jumlahInput.value || 0);
-        const harga = parseFloat(hargaPerLiterInput.value || 0);
-        const total = jumlah * harga;
-        totalBayarInput.value = total.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    };
+    const pad = (s, l) => s.padEnd(l);
+    const center = (s) => s.padStart((32+s.length)/2).padEnd(32);
+    
+    let text = center("PERTAMINA") + "\n" +
+               center(spbu) + "\n" +
+               center(lokasi) + "\n" +
+               center(telp) + "\n" +
+               "--------------------------------\n" +
+               center(tgl) + "\n" +
+               "--------------------------------\n" +
+               pad("PRODUK:", 10) + produk + "\n" +
+               pad("HARGA/L:", 10) + "Rp " + harga.toLocaleString() + "\n" +
+               pad("LITER:", 10) + liter.toFixed(2) + "\n" +
+               "--------------------------------\n" +
+               pad("TOTAL:", 10) + "Rp " + total.toLocaleString() + "\n" +
+               "--------------------------------\n" +
+               center("TERIMA KASIH") + "\n\n\n\n";
 
-    jumlahInput.addEventListener('input', hitungTotal);
-    hargaPerLiterInput.addEventListener('input', hitungTotal);
-
-    // Inisialisasi total saat halaman dimuat
-    hitungTotal();
-
-    function cetakStruk() {
-        const namaSPBU = document.getElementById('nama_stasiun').value.toUpperCase();
-        const produk = document.getElementById('produk').value;
-        const jumlah = parseFloat(jumlahInput.value || 0);
-        const hargaPerLiter = parseFloat(hargaPerLiterInput.value || 0);
-        const totalBayar = jumlah * hargaPerLiter;
-        const metode = document.getElementById('metode').value;
-        const tgl = new Date().toLocaleString('id-ID');
-
-        if (!produk || !jumlah || !hargaPerLiter) {
-            alert('Lengkapi semua data transaksi (Produk, Jumlah, Harga Per Liter) ya!');
-            return;
-        }
-
-        const LINE_WIDTH = 32; // Lebar karakter untuk printer 58mm
-
-        const center = (txt) => {
-            const spaces = Math.max(0, Math.floor((LINE_WIDTH - txt.length) / 2));
-            return " ".repeat(spaces) + txt;
-        };
-
-        const row = (left, right) => {
-            const leftLen = left.length;
-            const rightLen = right.length;
-            const spaces = Math.max(1, LINE_WIDTH - leftLen - rightLen);
-            return left + " ".repeat(spaces) + right;
-        };
-
-        const formatRupiah = (angka) => {
-            return Number(angka).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace('Rp', '').trim();
-        };
-
-        let struk = "";
-
-        // 1. Bagian Atas (Logo Placeholder)
-        struk += center("[LOGO PERTAMINA DI SINI]") + "\n"; // Placeholder
-        struk += "--------------------------------\n";
-
-        // 2. Informasi SPBU & Tanggal
-        struk += center(namaSPBU) + "\n";
-        struk += center("Jl. Raya Digital 123") + "\n";
-        struk += center("Telp: 021-XXXX-XXXX") + "\n";
-        struk += "--------------------------------\n";
-        struk += center(tgl) + "\n";
-        struk += "--------------------------------\n";
-
-        // 3. Detail Transaksi
-        struk += row(produk.substring(0, 20), formatRupiah(totalBayar)) + "\n"; // Batasi panjang produk
-        struk += row("  - " + jumlah.toFixed(2) + " LITER", "") + "\n"; // Detail jumlah liter
-        struk += row("  - @ " + formatRupiah(hargaPerLiter) + "/L", "") + "\n"; // Detail harga per liter
-        struk += "--------------------------------\n";
-
-        // 4. Total & Pembayaran
-        struk += row("TOTAL", "Rp " + formatRupiah(totalBayar)) + "\n";
-        struk += row("PEMBAYARAN", metode) + "\n";
-        struk += "--------------------------------\n";
-
-        // 5. Info Tambahan & Footer
-        struk += center("TERIMA KASIH") + "\n";
-        struk += center("TELAH MENGISI DI SPBU KAMI") + "\n\n\n\n"; // Jarak untuk potong kertas
-
-        // Kirim ke aplikasi RawBT
-        window.location.href = "rawbt:base64," + btoa(struk);
-    }
+    window.location.href = "rawbt:base64," + btoa(text);
+}
 </script>
-
 </body>
 </html>
