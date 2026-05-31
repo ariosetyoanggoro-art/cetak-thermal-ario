@@ -3,57 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk Pertamina</title>
+    <title>Cetak Struk SPBU</title>
     <style>
-        body { font-family: 'Courier New', Courier, monospace; background: #f0f2f5; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .card { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 350px; }
-        input { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; margin-top: 10px; font-weight: bold; }
-        .logo-placeholder { text-align: center; font-weight: bold; border: 1px dashed #000; padding: 10px; margin-bottom: 10px; }
+        body { font-family: sans-serif; background: #eef1f5; margin: 0; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #003399; margin-top: 0; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-size: 14px; color: #555; margin-bottom: 4px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 14px; background: #003399; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        button:active { background: #002266; }
     </style>
 </head>
 <body>
-<div class="card">
-    <div class="logo-placeholder">[LOGO PERTAMINA]</div>
-    <input type="text" id="spbu" value="SPBU 31.XXXXX">
-    <input type="text" id="lokasi" value="JL. RAYA XXXXXX">
-    <input type="text" id="telp" value="TELP: (021) XXXXXXX">
-    <input type="text" id="produk" value="PERTAMAX">
-    <input type="number" id="liter" value="10.00">
-    <input type="number" id="harga" value="13200">
+
+<div class="container">
+    <h2>Input Data Struk</h2>
+    
+    <div class="form-group">
+        <label>Nama SPBU</label>
+        <input type="text" id="spbu" value="SPBU 31.21106">
+    </div>
+    <div class="form-group">
+        <label>Alamat Baris 1</label>
+        <input type="text" id="alamat1" value="JL. RAYA CILANGKAP">
+    </div>
+    <div class="form-group">
+        <label>Alamat Baris 2</label>
+        <input type="text" id="alamat2" value="CIMAHI UTARA">
+    </div>
+    <div class="form-group">
+        <label>Telepon</label>
+        <input type="text" id="telp" value="TELP. 022-6654044">
+    </div>
+
+    <hr style="border-top: 1px dashed #ccc; border-bottom: none;">
+
+    <div class="form-group">
+        <label>Produk BBM</label>
+        <input type="text" id="produk" value="Pertalite">
+    </div>
+    <div class="form-group">
+        <label>Nozzle / Pompa</label>
+        <input type="text" id="nozzle" value="1">
+    </div>
+    <div class="form-group">
+        <label>Harga Per Liter (Rp)</label>
+        <input type="number" id="harga" value="10000">
+    </div>
+    <div class="form-group">
+        <label>Jumlah Liter</label>
+        <input type="number" id="liter" value="1.00">
+    </div>
+    <div class="form-group">
+        <label>Total Harga (Rp)</label>
+        <input type="number" id="total" value="10000">
+    </div>
+    <div class="form-group">
+        <label>Nama/ID Kasir</label>
+        <input type="text" id="kasir" value="3">
+    </div>
+
     <button onclick="cetak()">CETAK STRUK</button>
 </div>
+
 <script>
-function cetak() {
-    const spbu = document.getElementById('spbu').value;
-    const lokasi = document.getElementById('lokasi').value;
-    const telp = document.getElementById('telp').value;
-    const produk = document.getElementById('produk').value;
-    const liter = parseFloat(document.getElementById('liter').value);
-    const harga = parseInt(document.getElementById('harga').value);
-    const total = liter * harga;
-    const tgl = new Date().toLocaleString('id-ID');
+    function cetak() {
+        // Mengambil data dari form
+        const spbu = document.getElementById('spbu').value.toUpperCase();
+        const al1 = document.getElementById('alamat1').value.toUpperCase();
+        const al2 = document.getElementById('alamat2').value.toUpperCase();
+        const telp = document.getElementById('telp').value.toUpperCase();
+        
+        const produk = document.getElementById('produk').value;
+        const nozzle = document.getElementById('nozzle').value;
+        const harga = parseInt(document.getElementById('harga').value).toLocaleString('id-ID');
+        const liter = document.getElementById('liter').value;
+        const total = "Rp. " + parseInt(document.getElementById('total').value).toLocaleString('id-ID');
+        const kasir = document.getElementById('kasir').value;
+        
+        const tgl = new Date().toLocaleString('id-ID', { 
+            day: '2-digit', month: '2-digit', year: 'numeric', 
+            hour: '2-digit', minute: '2-digit', second: '2-digit' 
+        });
 
-    const pad = (s, l) => s.padEnd(l);
-    const center = (s) => s.padStart((32+s.length)/2).padEnd(32);
-    
-    let text = center("PERTAMINA") + "\n" +
-               center(spbu) + "\n" +
-               center(lokasi) + "\n" +
-               center(telp) + "\n" +
-               "--------------------------------\n" +
-               center(tgl) + "\n" +
-               "--------------------------------\n" +
-               pad("PRODUK:", 10) + produk + "\n" +
-               pad("HARGA/L:", 10) + "Rp " + harga.toLocaleString() + "\n" +
-               pad("LITER:", 10) + liter.toFixed(2) + "\n" +
-               "--------------------------------\n" +
-               pad("TOTAL:", 10) + "Rp " + total.toLocaleString() + "\n" +
-               "--------------------------------\n" +
-               center("TERIMA KASIH") + "\n\n\n\n";
+        // Fungsi formatting printer thermal (lebar 32 karakter)
+        const center = (txt) => {
+            let space = Math.max(0, Math.floor((32 - txt.length) / 2));
+            return " ".repeat(space) + txt;
+        };
 
-    window.location.href = "rawbt:base64," + btoa(text);
-}
+        // Fungsi membuat baris rata kiri-kanan
+        const row = (kiri, kanan) => {
+            let space = 32 - (kiri.length + kanan.length);
+            return kiri + " ".repeat(Math.max(1, space)) + kanan;
+        };
+
+        let struk = "";
+        struk += center("PERTAMINA") + "\n"; // Logo Text
+        struk += center(spbu) + "\n";
+        struk += center(al1) + "\n";
+        struk += center(al2) + "\n";
+        struk += center(telp) + "\n";
+        struk += "--------------------------------\n";
+        struk += center(tgl) + "\n";
+        struk += "--------------------------------\n";
+        struk += row("PRODUK", ": " + produk) + "\n";
+        struk += row("NOZZLE", ": " + nozzle) + "\n";
+        struk += row("HARGA/L", ": " + harga) + "\n";
+        struk += row("LITER", ": " + liter) + "\n";
+        struk += "--------------------------------\n";
+        struk += row("TOTAL", ": " + total) + "\n";
+        struk += "--------------------------------\n";
+        struk += center("TERIMA KASIH") + "\n";
+        struk += center("SELAMAT JALAN") + "\n";
+        struk += row("KASIR", ": " + kasir) + "\n";
+        struk += "\n\n\n"; // Jarak potong kertas
+
+        // Kirim ke RawBT
+        window.location.href = "rawbt:base64," + btoa(struk);
+    }
 </script>
+
 </body>
 </html>
