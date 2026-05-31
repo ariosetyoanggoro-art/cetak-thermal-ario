@@ -179,11 +179,11 @@
         // ASCII Art Logo Pertamina (sederhana)
         const logoAscii = [
             "   ____   _                 _",
-            "  |  _ \ (_) __ _ _ __   __| |",
-            "  | |_) | | |/ _` | \'_ \ / _` |",
-            "  |  __/| | | (_| | | | | (_| |";
-            "  |_|   |_|_|\__,_|_| |_|\__,_|"
-        ].join('\n');
+            "  |  _ \\ (_) __ _ _ __   __| |",
+            "  | |_) | | |/ _` | '_ \\ / _` |",
+            "  |  __/| | | (_| | | | | (_| |",
+            "  |_|   |_|_|\\__,_|_| |_|\\__,_|"
+        ].join('\\n');
 
         let struk = "";
 
@@ -191,7 +191,8 @@
         struk += logoAscii + "\n";
         
         // 2. Header Informasi
-        struk += center("<b>" + spbu + "</b>") + "\n"; // Nomor tebal pakai ESC/POS
+        // Nomor tebal pakai ESC/POS
+        struk += center("\x1b\x45" + spbu + "\x1b\x46") + "\n";
         struk += center(lokasi) + "\n";
         struk += center(alamat) + "\n";
         struk += center(telp) + "\n";
