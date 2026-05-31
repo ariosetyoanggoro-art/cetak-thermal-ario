@@ -157,12 +157,10 @@
         // Nama SPBU & Alamat
         s += center(nama_spbu) + '\n';
         s += center(alamat) + '\n';
-        s += garis + '\n';
 
         // Shift, No Trans, Waktu
         s += 'Shift : ' + shift + '   No.Trans: ' + no_trans + '\n';
         s += 'Waktu : ' + waktu + '\n';
-        s += garis + '\n';
 
         // Detail transaksi (titik dua lurus)
         s += rowKolom('Pulau/Pompa', pompa) + '\n';
@@ -171,7 +169,6 @@
         s += rowKolom('Volume', volume) + '\n';
         s += rowKolom('Total Harga', 'Rp.' + formatRp(total)) + '\n';
         s += rowKolom('Operator', operator) + '\n';
-        s += garis + '\n';
 
         // CASH dan Total
         s += 'CASH          : Rp.' + formatRp(total) + '\n';
@@ -179,12 +176,10 @@
 
         // No Plat
         s += 'No. Plat : ' + no_plat + '\n';
-        s += garis + '\n';
 
         // Catatan
         if (catatan) {
             s += catatan + '\n';
-            s += garis + '\n';
         }
 
         s += '\n\n\n';
