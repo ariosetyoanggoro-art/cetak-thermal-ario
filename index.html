@@ -129,10 +129,19 @@
             return label + ': ' + value;
         }
 
-        var s = '<img>https://ariosetyoanggoro-art.github.io/cetak-thermal-ario/logo-pertamina.png</img>\n';
+        function formatRp(n) {
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Initialize Printer and Reset Bold
+        var s = '\x1b\x40'; 
         
+        // Logo (RawBT tag)
+        s += '<img>https://ariosetyoanggoro-art.github.io/cetak-thermal-ario/logo-pertamina.png</img>\n';
+        
+        // Nomor SPBU (Hanya ini yang BOLD)
         var spNomor = Math.floor((W - spbu.length) / 2);
-        s += new Array(spNomor + 1).join(' ') + '\x1b\x45' + spbu + '\x1b\x46\n';
+        s += new Array(spNomor + 1).join(' ') + '\x1b\x45\x01' + spbu + '\x1b\x45\x00\n';
         
         s += center(nama) + '\n';
         s += center(alamat) + '\n';
@@ -141,12 +150,12 @@
         s += '--------------------------------\n';
         s += rowKolom('Pulau/Pompa', document.getElementById('in_pompa').value) + '\n';
         s += rowKolom('Nama Produk', document.getElementById('in_produk').value) + '\n';
-        s += rowKolom('Harga/Liter', 'Rp.' + formatRibuan(document.getElementById('in_harga').value)) + '\n';
+        s += rowKolom('Harga/Liter', 'Rp.' + formatRp(document.getElementById('in_harga').value)) + '\n';
         s += rowKolom('Volume', document.getElementById('in_vol').value) + '\n';
-        s += rowKolom('Total Harga', 'Rp.' + formatRibuan(total)) + '\n';
+        s += rowKolom('Total Harga', 'Rp.' + formatRp(total)) + '\n';
         s += rowKolom('Operator', 'BAMBANG') + '\n';
         s += '--------------------------------\n';
-        s += row('CASH', 'Rp.' + formatRibuan(total)) + '\n';
+        s += row('CASH', 'Rp.' + formatRp(total)) + '\n';
         s += '\n';
         s += '--------------------------------\n';
         s += 'No. Plat : ' + document.getElementById('in_plat').value + '\n';
