@@ -148,8 +148,8 @@
         var garis = '--------------------------------';
         var s = '';
 
-        // Logo Pertamina sebagai teks (format image via RawBT)
-        s += '<img>https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Pertamina_Logo.svg/320px-Pertamina_Logo.svg.png</img>\n';
+        // Logo Pertamina as internal file image tag
+        s += '<img>logo-pertamina.png</img>\n';
 
         // Nomor SPBU (Bold via ESC/POS)
         s += center('\x1b\x45\x01' + nomor_spbu + '\x1b\x45\x00') + '\n';
@@ -173,8 +173,8 @@
         s += rowKolom('Operator', operator) + '\n';
         s += garis + '\n';
 
-        // CASH rata kiri
-        s += 'CASH\n';
+        // CASH dan Total
+        s += 'CASH          : Rp.' + formatRp(total) + '\n';
         s += '\n';
 
         // No Plat
@@ -187,11 +187,6 @@
             s += garis + '\n';
         }
 
-        // Footer
-        s += center('Terima Kasih') + '\n';
-        s += center('Selamat Jalan') + '\n';
-        s += center('Semoga Selamat') + '\n';
-        s += center('Sampai Tujuan') + '\n';
         s += '\n\n\n';
 
         // Kirim ke RawBT
