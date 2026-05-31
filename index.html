@@ -22,7 +22,7 @@
 
         .receipt-preview { 
             background: #fff; padding: 5px; margin-top: 20px; border: 1px solid #ddd; width: 300px; 
-            font-size: 16px; font-weight: 400; color: #000; line-height: 1.1;
+            font-size: 20px; font-weight: 400; color: #000; line-height: 1.1;
             font-family: 'DotGothic16', sans-serif;
         }
         .center { text-align: center; }
@@ -106,9 +106,11 @@
     <div class="center" id="out_spbu"></div>
     <div class="center" id="out_alamat"></div>
     
-    <div id="out_shift_row" class="item-row"><span class="item-label">Shift</span>: <span id="out_shift"></span></div>
-    <div id="out_trans_row" class="item-row"><span class="item-label">No. Trans</span>: <span id="out_trans"></span></div>
-    <div id="out_waktu_row" class="item-row"><span class="item-label">Waktu</span>: <span id="out_waktu"></span></div>
+    <div style="display: flex; justify-content: space-between;">
+        <div>Shift : <span id="out_shift"></span></div>
+        <div>No. Trans : <span id="out_trans"></span></div>
+    </div>
+    <div>Waktu : <span id="out_waktu"></span></div>
     
     <div class="line"></div>
     
@@ -209,9 +211,8 @@
         s += center(nama) + '\n';
         s += center(alamat) + '\n';
         
-        s += rowKolom('Shift', document.getElementById('in_shift').value) + '\n';
-        s += rowKolom('No. Trans', document.getElementById('in_trans').value) + '\n';
-        s += rowKolom('Waktu', getIndonesianDateTime(document.getElementById('in_waktu').value)) + '\n';
+        s += row('Shift : ' + document.getElementById('in_shift').value, 'No. Trans : ' + document.getElementById('in_trans').value) + '\n';
+        s += 'Waktu : ' + getIndonesianDateTime(document.getElementById('in_waktu').value) + '\n';
         
         var garis = '--------------------------------';
         s += garis + '\n';
